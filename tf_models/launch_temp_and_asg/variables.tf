@@ -28,11 +28,6 @@ variable "instance_type" {
   description = "An instance type"
 }
 
-variable "instance_type" {
-  type        = string
-  description = "An instance type"
-}
-
 variable "iam_instance_profile_name" {
   type        = string
   description = "IAM instance profile name"
@@ -82,9 +77,3 @@ variable "protect_from_scale_in" {
   type        = bool
   description = "Protect from scale in"
 }
-
-variable "create_before_destroy" {
-  type        = bool
-  description = "Create before destroy"
-}
-

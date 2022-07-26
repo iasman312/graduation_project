@@ -38,7 +38,7 @@ resource "aws_autoscaling_group" "sample" {
     protect_from_scale_in = var.protect_from_scale_in
 
     lifecycle {
-      create_before_destroy = var.create_before_destroy
+      create_before_destroy = true
     }
 
     launch_template {
