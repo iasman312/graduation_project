@@ -34,7 +34,6 @@ resource "aws_autoscaling_group" "ecs_asg" {
   max_size                  = var.max_size
   health_check_grace_period = var.health_check_grace_period
   health_check_type         = var.health_check_type
-  target_group_arns         = var.target_group_arns
   protect_from_scale_in     = var.protect_from_scale_in
 
   lifecycle {

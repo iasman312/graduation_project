@@ -68,11 +68,6 @@ variable "health_check_type" {
   description = "Health check type"
 }
 
-variable "target_group_arns" {
-  type        = list(any)
-  description = "Target group arns"
-}
-
 variable "protect_from_scale_in" {
   type        = bool
   description = "Protect from scale in"
