@@ -23,7 +23,7 @@ resource "aws_lb_target_group" "sample" {
 }
 
 resource "aws_lb_listener" "sample_1" {
-  load_balancer_arn = aws_lb.jenkins-lb.arn
+  load_balancer_arn = aws_lb.sample.arn
   port              = "80"
   protocol          = "HTTP"
   default_action {
@@ -33,7 +33,7 @@ resource "aws_lb_listener" "sample_1" {
 }
 
 resource "aws_lb_listener" "sample_2" {
-  load_balancer_arn = aws_lb.jenkins-lb.arn
+  load_balancer_arn = aws_lb.sample.arn
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"

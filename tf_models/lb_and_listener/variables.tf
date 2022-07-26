@@ -58,7 +58,7 @@ variable "healthy_threshold" {
   description = "Healthy threshold amount"
 }
 
-variable "uhealthy_threshold" {
+variable "unhealthy_threshold" {
   type        = number
   description = "Unhealthy threshold amount"
 }
