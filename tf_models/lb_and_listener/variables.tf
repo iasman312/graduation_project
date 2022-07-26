@@ -78,7 +78,7 @@ variable "health_check_matcher" {
   description = "Health check matcher"
 }
 
-variable "certificate_arn" {
-  type        = string
-  description = "Certificate arn"
-}
+# variable "certificate_arn" {
+#   type        = string
+#   description = "Certificate arn"
+# }
