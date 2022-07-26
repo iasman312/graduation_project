@@ -23,6 +23,31 @@ variable "security_groups" {
   description = "Security groups"
 }
 
+variable "tg_name" {
+  type        = string
+  description = "Target group name"
+}
+
+variable "tg_port" {
+  type        = string
+  description = "Target group port"
+}
+
+variable "tg_protocol" {
+  type        = string
+  description = "Target group protocol"
+}
+
+variable "tg_type" {
+  type        = string
+  description = "Target group type"
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID"
+}
+
 variable "health_check_path" {
   type        = string
   description = "Health check path"
