@@ -12,7 +12,7 @@ resource "aws_ecs_service" "ecs_service" {
     field = "cpu"
   }
   load_balancer {
-    target_group_arn = data.terraform_remote_state.lb.outputs.ecs_jenkins_lb_target_group_arn
+    target_group_arn = aws_lb_target_group.lb_tg.arn
     container_name   = var.container_name
     container_port   = var.container_port
   }
