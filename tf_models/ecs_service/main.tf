@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "ecs_td" {
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.execution_role_arn
   container_definitions    = templatefile(
-    "./container_info.json", 
+    "${path.module}/container_info.json", 
     {
       container_name = var.container_name, 
       container_image = var.container_image, 
