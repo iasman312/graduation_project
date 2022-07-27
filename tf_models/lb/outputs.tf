@@ -5,3 +5,7 @@ output "lb_arn" {
 output "alb_web_listener" {
   value = aws_lb_listener.http
 }
+
+output "alb_web_listener_arn" {
+  value = aws_lb_listener.http.arn
+}

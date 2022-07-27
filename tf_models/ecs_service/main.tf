@@ -2,19 +2,19 @@
 # ECS service #
 ###############
 resource "aws_ecs_service" "ecs_service" {
-  name            = "jenkins"
-  cluster         = data.terraform_remote_state.cluster.outputs.ecs_jenkins_cluster_id
-  task_definition = aws_ecs_task_definition.jenkins-ecs-task-definition.arn
-  launch_type     = "EC2"
-  desired_count = 1
+  name            = var.ecs_service_name
+  cluster         = var.cluster
+  task_definition = aws_ecs_task_definition.ecs_td.arn
+  launch_type     = var.launch_type
+  desired_count = var.desired_count
   ordered_placement_strategy {
     type  = "binpack"
     field = "cpu"
   }
   load_balancer {
     target_group_arn = data.terraform_remote_state.lb.outputs.ecs_jenkins_lb_target_group_arn
-    container_name   = "jenkins"
-    container_port   = 8080
+    container_name   = var.container_name
+    container_port   = var.container_port
   }
   lifecycle {
     ignore_changes = [desired_count]
@@ -24,17 +24,67 @@ resource "aws_ecs_service" "ecs_service" {
 #######################
 # ECS Task Definition #
 #######################
-resource "aws_ecs_task_definition" "jenkins-ecs-task-definition" {
+resource "aws_ecs_task_definition" "ecs_td" {
   family                   = var.task_def_family
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = data.terraform_remote_state.iam_roles.outputs.ecs_task_execution_role_arn
-  container_definitions    = file("container_definitions/container-def.json")
+  execution_role_arn       = var.execution_role_arn
+  container_definitions    = templatefile(
+    "container_info.json", 
+    {
+      container_name = var.container_name, 
+      container_image = var.container_image, 
+      memory = var.memory, 
+      cpu = var.cpu, 
+      container_port = var.container_port, 
+      host_port = var.host_port, 
+      source_volume = var.volume_name,
+      container_path = var.container_path
+    }
+  )
   volume {
-    name = "ecs-ebs-volume"
+    name = var.volume_name
     docker_volume_configuration {
       scope = "shared"
       autoprovision = "true"
       driver        = "local"
+    }
+  }
+}
+
+####################
+# ALB Target Group #
+####################
+resource "aws_lb_target_group" "lb_tg" {
+  name        = var.tg_name
+  port        = var.tg_port
+  protocol    = var.tg_protocol
+  target_type = var.tg_type
+  vpc_id      = var.vpc_id
+  health_check {
+    path                = var.health_check_path
+    healthy_threshold   = var.healthy_threshold
+    unhealthy_threshold = var.unhealthy_threshold
+    timeout             = var.timeout
+    interval            = var.interval
+    matcher             = var.matcher
+  }
+}
+
+#####################
+# ALB Listener Rule #
+#####################
+resource "aws_lb_listener_rule" "lb_lr" {
+  listener_arn = var.listener_arn
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+  }
+
+  condition {
+    path_pattern {
+      values = [var.path_pattern]
     }
   }
 }
