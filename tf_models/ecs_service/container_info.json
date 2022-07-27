@@ -2,13 +2,13 @@
     {
         "name": "${container_name}",
         "image": "${container_image}",
-        "memory": "${memory}",
-        "cpu": "${cpu}",
+        "memory": ${memory},
+        "cpu": ${cpu},
         "essential": true,
         "portMappings": [
         {
-            "containerPort": "${container_port}",
-            "hostPort": "${host_port}"
+            "containerPort": ${container_port},
+            "hostPort": ${host_port}
         },
         {
             "containerPort": 50000,
