@@ -17,7 +17,7 @@
         ],
         "mountPoints": [
         {
-            "sourceVolume": "${volume_name}",
+            "sourceVolume": "${source_volume}",
             "containerPath": "${container_path}"
         }
         ]
