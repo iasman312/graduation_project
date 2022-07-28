@@ -81,3 +81,19 @@ variable "lb_type" {
 variable "internal" {
   type        = bool
 }
+
+variable "vpc_security_group_ids" {
+  type = list
+}
+
+variable "iam_instance_profile" {
+  type = string
+}
+
+variable "subnets" {
+  type = list
+}
+
+variable "security_groups" {
+  type = list
+}

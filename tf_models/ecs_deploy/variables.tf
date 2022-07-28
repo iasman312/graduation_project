@@ -86,6 +86,22 @@ variable "matcher" {
   type        = string
 }
 
+variable "cluster" {
+  type        = string
+}
+
+variable "execution_role_arn" {
+  type        = string
+}
+
+variable "vpc_id" {
+  type        = string
+}
+
+variable "load_balancer_arn" {
+  type        = string
+}
+
 
 
 

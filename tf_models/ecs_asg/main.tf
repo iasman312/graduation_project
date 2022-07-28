@@ -1,8 +1,3 @@
-provider "aws" {
-  region  = var.region
-  profile = var.profile_name
-}
-
 #####################
 #  Launch template  #
 #####################
@@ -10,7 +5,7 @@ resource "aws_launch_template" "ecs_lt" {
   name_prefix            = var.launch_temp_name_prefix
   key_name               = var.key_name
   image_id               = var.image_id
-  vpc_security_group_ids = [data.terraform_remote_state.security_groups.outputs.security_group_ecs_id]
+  vpc_security_group_ids = var.vpc_security_group_ids
   user_data = base64encode(
     templatefile(
       "./config.sh",
@@ -22,7 +17,7 @@ resource "aws_launch_template" "ecs_lt" {
   instance_type = var.instance_type
 
   iam_instance_profile {
-    name = data.terraform_remote_state.iam_roles.outputs.ecs_agent_instance_profile_name
+    name = var.iam_instance_profile
   }
 }
 
@@ -31,7 +26,7 @@ resource "aws_launch_template" "ecs_lt" {
 #####################
 resource "aws_autoscaling_group" "ecs_asg" {
   name                = var.asg_name
-  vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.public_subnets
+  vpc_zone_identifier = var.subnets
 
   desired_capacity          = var.desired_capacity
   min_size                  = var.min_size
@@ -57,6 +52,6 @@ resource "aws_lb" "app_alb" {
   name               = var.lb_name
   load_balancer_type = var.lb_type
   internal           = var.internal
-  subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
-  security_groups    = [data.terraform_remote_state.security_group.outputs.security_group_jenkins_lb_id]
+  subnets            = var.subnets
+  security_groups    = var.security_groups
 }
