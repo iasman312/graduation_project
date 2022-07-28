@@ -1,3 +1,15 @@
+variable "region" {
+  type        = string
+  description = "A region of our network"
+  default     = "us-east-1"
+}
+
+variable "profile_name" {
+  type        = string
+  description = "A aws profile name"
+  default     = "MyAWS"
+}
+
 variable "launch_temp_name_prefix" {
   type        = string
   description = "A launch template name prefix"
