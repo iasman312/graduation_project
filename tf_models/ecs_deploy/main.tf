@@ -3,7 +3,7 @@
 ###############
 resource "aws_ecs_service" "ecs_service" {
   name            = var.ecs_service_name
-  cluster         = var.cluster
+  cluster         = data.terraform_remote_state.cluster.outputs.ecs_jenkins_cluster_id
   task_definition = aws_ecs_task_definition.ecs_td.arn
   launch_type     = var.launch_type
   desired_count = var.desired_count
@@ -27,7 +27,7 @@ resource "aws_ecs_service" "ecs_service" {
 resource "aws_ecs_task_definition" "ecs_td" {
   family                   = var.task_def_family
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = var.execution_role_arn
+  execution_role_arn       = data.terraform_remote_state.iam_roles.outputs.ecs_task_execution_role_arn
   container_definitions    = templatefile(
     "${path.module}/container_info.json", 
     {
@@ -59,7 +59,7 @@ resource "aws_lb_target_group" "lb_tg" {
   port        = var.tg_port
   protocol    = var.tg_protocol
   target_type = var.tg_type
-  vpc_id      = var.vpc_id
+  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
   health_check {
     path                = var.health_check_path
     healthy_threshold   = var.healthy_threshold
@@ -73,12 +73,12 @@ resource "aws_lb_target_group" "lb_tg" {
 #####################
 # ALB Listener Rule #
 #####################
-resource "aws_lb_listener_rule" "lb_lr" {
-  listener_arn = var.listener_arn
-  priority     = 100
-
-  action {
+resource "aws_lb_listener" "http_listener_forward" {
+  load_balancer_arn = data.terraform_remote_state.cluster.outputs.lb_arn
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.lb_tg.arn
+    target_group_arn = "${aws_lb_target_group.target_group.arn}"
   }
 }

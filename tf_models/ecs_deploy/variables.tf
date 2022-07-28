@@ -2,10 +2,6 @@ variable "ecs_service_name" {
   type        = string
 }
 
-variable "cluster" {
-  type        = string
-}
-
 variable "launch_type" {
   type        = string
 }
@@ -23,10 +19,6 @@ variable "container_port" {
 }
 
 variable "task_def_family" {
-  type        = string
-}
-
-variable "execution_role_arn" {
   type        = string
 }
 
@@ -70,10 +62,6 @@ variable "tg_type" {
   type        = string
 }
 
-variable "vpc_id" {
-  type        = string
-}
-
 variable "health_check_path" {
   type        = string
 }
@@ -95,14 +83,6 @@ variable "interval" {
 }
 
 variable "matcher" {
-  type        = string
-}
-
-variable "listener_arn" {
-  type        = string
-}
-
-variable "path_pattern" {
   type        = string
 }
 

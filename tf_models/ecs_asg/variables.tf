@@ -13,11 +13,6 @@ variable "image_id" {
   description = "A launch template image id"
 }
 
-variable "security_group_ids" {
-  type        = list(any)
-  description = "A launch template security group id"
-}
-
 variable "cluster_name" {
   type        = string
   description = "A cluster name"
@@ -28,19 +23,9 @@ variable "instance_type" {
   description = "An instance type"
 }
 
-variable "iam_instance_profile_name" {
-  type        = string
-  description = "IAM instance profile name"
-}
-
 variable "asg_name" {
   type        = string
   description = "Autoscaling group name"
-}
-
-variable "vpc_zone_identifier" {
-  type        = list(any)
-  description = "VPC zone identifier"
 }
 
 variable "desired_capacity" {
@@ -71,4 +56,16 @@ variable "health_check_type" {
 variable "protect_from_scale_in" {
   type        = bool
   description = "Protect from scale in"
+}
+
+variable "lb_name" {
+  type        = string
+}
+
+variable "lb_type" {
+  type        = string
+}
+
+variable "internal" {
+  type        = bool
 }
