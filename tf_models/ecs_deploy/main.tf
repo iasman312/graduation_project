@@ -29,16 +29,21 @@ resource "aws_ecs_task_definition" "ecs_td" {
   requires_compatibilities = ["EC2"]
   execution_role_arn       = var.execution_role_arn
   container_definitions    = templatefile(
-    "${path.module}/container_info.json", 
+    "${path.module}/${var.container_file}", 
     {
       container_name = var.container_name, 
       container_image = var.container_image, 
       memory = var.memory, 
       cpu = var.cpu, 
       container_port = var.container_port, 
-      host_port = var.host_port, 
+      host_port = var.host_port,
       source_volume = var.volume_name,
-      container_path = var.container_path
+      container_path = var.container_path,
+      db_name = var.db_name,
+      db_host = var.db_host, 
+      db_user = var.db_user, 
+      db_pass = var.db_pass, 
+      db_port = var.db_port
     }
   )
   volume {

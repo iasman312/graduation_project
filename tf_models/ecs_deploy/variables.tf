@@ -102,6 +102,39 @@ variable "load_balancer_arn" {
   type        = string
 }
 
+variable "container_file" {
+  type        = string
+}
+
+variable "db_host" {
+  type        = string
+  description = "DB HOST"
+}
+
+variable "db_name" {
+  type        = string
+  description = "DB NAME"
+  default = "foo"
+}
+
+variable "db_user" {
+  type        = string
+  description = "DB USER"
+  default = "foo"
+}
+
+variable "db_pass" {
+  type        = string
+  description = "DB PASS"
+  default = "foopassword"
+}
+
+variable "db_port" {
+  type        = string
+  description = "DB PORT"
+  default = "5432"
+}
+
 
 
 

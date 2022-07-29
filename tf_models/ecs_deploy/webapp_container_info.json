@@ -1,0 +1,22 @@
+[
+    {
+        "name": "${container_name}",
+        "image": "${container_image}",
+        "memory": ${memory},
+        "cpu": ${cpu},
+        "essential": true,
+        "environment": [
+            {"name": "DB_NAME", "value": "${db_name}"},
+            {"name": "DB_HOST", "value": "${db_host}"},
+            {"name": "DB_USER", "value": "${db_user}"},
+            {"name": "DB_PASS", "value": "${db_pass}"},
+            {"name": "DB_PORT", "value": "${db_port}"}
+        ],
+        "portMappings": [
+            {
+                "containerPort": ${container_port},
+                "hostPort": ${host_port}
+            }
+        ]
+    }
+]
