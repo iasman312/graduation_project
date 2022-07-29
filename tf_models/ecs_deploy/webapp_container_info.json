@@ -17,6 +17,12 @@
                 "containerPort": ${container_port},
                 "hostPort": ${host_port}
             }
+        ],
+        "mountPoints": [
+            {
+                "sourceVolume": "${source_volume}",
+                "containerPath": "${container_path}"
+            }
         ]
     }
 ]
