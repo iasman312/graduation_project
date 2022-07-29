@@ -70,18 +70,6 @@ variable "protect_from_scale_in" {
   description = "Protect from scale in"
 }
 
-variable "lb_name" {
-  type        = string
-}
-
-variable "lb_type" {
-  type        = string
-}
-
-variable "internal" {
-  type        = bool
-}
-
 variable "vpc_security_group_ids" {
   type = list
 }
@@ -91,9 +79,5 @@ variable "iam_instance_profile" {
 }
 
 variable "subnets" {
-  type = list
-}
-
-variable "security_groups" {
   type = list
 }

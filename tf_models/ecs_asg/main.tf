@@ -44,14 +44,3 @@ resource "aws_autoscaling_group" "ecs_asg" {
     version = "$Latest"
   }
 }
-
-#############################
-# Application Load Balancer #
-#############################
-resource "aws_lb" "app_alb" {
-  name               = var.lb_name
-  load_balancer_type = var.lb_type
-  internal           = var.internal
-  subnets            = var.subnets
-  security_groups    = var.security_groups
-}
