@@ -8,7 +8,7 @@ resource "aws_launch_template" "ecs_lt" {
   vpc_security_group_ids = var.vpc_security_group_ids
   user_data = base64encode(
     templatefile(
-      "./config.sh",
+      "${path.module}/config.sh",
       {
         cluster_name = var.cluster_name
       }
